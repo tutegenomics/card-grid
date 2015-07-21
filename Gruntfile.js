@@ -10,7 +10,7 @@ module.exports = function(grunt){
                 files: [
                     'src/**/*.js',
                     'src/**/*.html',
-                    'src/sass/main.css'
+                    'src/**/*.css'
                 ],
                 tasks: [],
                 options: {

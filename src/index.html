@@ -2,11 +2,39 @@
 <html>
 <head>
     <title>Card Grid</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e3e3e3;
+        }
+    </style>
+    <link rel="stylesheet" href="sass/main.css"/>
 </head>
-<body>
-test
+<body ng-app="app" ng-controller="ctrl">
 
 
-<script src="lib/angular/angular.min.js"></script>
+<div class="card-grid-wrapper">
+    <div class="card-grid-column">
+        <div class="card"></div>
+    </div>
+    <div class="card-grid-column">
+        <div class="card"></div>
+    </div>
+    <div class="card-grid-column">
+        <div class="card"></div>
+    </div>
+    <div class="card-grid-column">
+        <div class="card"></div>
+    </div>
+</div>
+
+
+<card-grid cards="cards" gutter=""></card-grid>
+
+<script src="lib/angular/angular.js"></script>
+<script src="app.js"></script>
+<script src="lib/lodash/lodash.min.js"></script>
+<script src="card-grid.js"></script>
 </body>
 </html>
