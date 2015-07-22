@@ -12,18 +12,6 @@ angular.module('cardGrid', [])
             $scope.columnElements = [];
             var columnTemplate = '<div class="card-grid-column"></div>';
             var cardTemplate = '<div class="card"></div>';
-            var gridSize = function(containerWidth) {
-                if (containerWidth >= 900) {
-                    return {columns: 2, width: 900};
-                } else if (containerWidth >= 1200) {
-                    return {columns: 3, width: 1200};
-                } else if (containerWidth >= 1600) {
-                    return {columns: 4, width: 1600};
-                } else {
-                    return 1;
-                }
-            };
-
             var w = angular.element($window);
             w.bind('resize', function() {
                 resizeDebounce();
@@ -32,17 +20,11 @@ angular.module('cardGrid', [])
 
             var grid = {
                 init: function() {
-                    this.empty();
+                    var self = this;
+                    self.empty();
+                    var gridSize = self.getSize();
 
-                    var gridCount = gridSize($element[0].offsetWidth);
-
-                    for (var i=0;i<gridCount.columns;i++) {
-                        var newColumn = angular.element(columnTemplate);
-                        $scope.columnElements.push({
-                            element: $compile(newColumn)($scope)
-                        });
-                        $element.append($scope.columnElements[$scope.columnElements.length-1].element);
-                    }
+                    self.createColumns();
 
                     angular.forEach($scope.cards, function(card) {
                         var newCard = angular.element(cardTemplate);
@@ -53,35 +35,71 @@ angular.module('cardGrid', [])
                         //apply data attribute
                         newCard.attr('data', card.data);
 
-                        // compile element and add to card array
+                        // compile element
+                        newCard = $compile(newCard)($scope);
+
+                        // add to card array
                         $scope.cardElements.push({
-                            element: $compile(newCard)($scope),
+                            element: newCard,
                             directive: card.directiveName
                         });
-
-                        $scope.columnElements[grid.getSmallestColumn()].element.append($scope.cardElements[$scope.cardElements.length-1].element);
-
-                        console.log($scope.columnElements[0].element[0].style.height)
-
-
+                        angular.forEach($scope.cards, function(card) {
+                            $scope.columnElements[self.getSmallestColumn()].element.append($scope.cardElements[$scope.cardElements.length-1].element);
+                        });
                     });
+
                 },
                 resize: function() {
                     var self = this;
-                    angular.forEach($scope.cards, function(card) {
-                        console.log('hey')
+                    self.empty();
+                    self.createColumns();
+                    angular.forEach($scope.cardElements, function(card, index) {
+                        $scope.columnElements[self.getSmallestColumn()].element.append(card.element);
                     });
                 },
                 empty: function() {
                     $element.empty();
                 },
+                createColumns: function() {
+                    var self = this;
+                    $scope.columnElements = [];
+                    for (var i=0;i<self.getSize().columns;i++) {
+                        var newColumn = angular.element(columnTemplate);
+                        $scope.columnElements.push({
+                            element: $compile(newColumn)($scope)
+                        });
+                        $element.append($scope.columnElements[$scope.columnElements.length-1].element);
+                    }
+                },
+                getSize: function() {
+                    var containerWidth = $element[0].offsetWidth,
+                        returnVal;
+                    if (containerWidth > 1400) {
+                        returnVal = {columns: 4, width: 1600};
+                    } else if (containerWidth > 1060) {
+                        returnVal = {columns: 3, width: 1200};
+                    } else if (containerWidth > 760) {
+                        returnVal = {columns: 2, width: 900};
+                    } else {
+                        returnVal = {columns: 1, width: 400};
+                    }
+
+                    return returnVal;
+                },
                 getSmallestColumn: function() {
-                    return $scope.columnElements.reduce(function(a, b) {
-                        return Math.min(a.element[0].style.height,b.element[0].style.height)
-                    });
+                    var index = 0;
+                    var value = $scope.columnElements[0].element[0].offsetHeight;
+                    for (var i = 1; i < $scope.columnElements.length; i++) {
+                        if ($scope.columnElements[i].element[0].offsetHeight < value) {
+                            value = $scope.columnElements[i].element[0].offsetHeight;
+                            index = i;
+                        }
+                    }
+                    return index;
                 }
+
             };
-            var resizeDebounce = _.debounce(grid.resize, 500);
+            var resizeDebounce = _.debounce(grid.resize.bind(grid), 500);
 
             grid.init();
 

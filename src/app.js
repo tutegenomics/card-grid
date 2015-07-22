@@ -41,8 +41,15 @@ angular.module('app', ['cardGrid'])
     .directive('testDirective', function() {
         return {
             link: function(scope, element) {
-
+                scope.here = 'hey'
             },
-            template: 'this is the template'
+            template: function(element, attrs) {
+                var number = Math.floor(Math.random() * 51) - 20;
+                var string = '';
+                for (var i=0; i<number; i++) {
+                    string += '<br>';
+                }
+                return 'hey hey hey' + string;
+            }
         }
     });

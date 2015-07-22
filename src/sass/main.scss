@@ -1,19 +1,42 @@
 .card-grid-container {
+
 }
 
 .card-grid-wrapper {
-  display: flex;
   padding: 0 20px;
   margin: 0 auto;
-}
+  clear: both;
 
-.card-grid-column {
-  flex: 1;
-  margin: 10px;
-}
+  .card-grid-column {
+    width: 370px;
+    margin: 10px auto 0 auto;
+  }
 
-.card {
-  background-color: #fff;
-  border: solid 1px #d3d3d3;
-  height: 400px;
+  .card {
+    background-color: #fff;
+    border: solid 1px #d3d3d3;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (min-width: 840px) {
+    width: 760px;
+
+    .card-grid-column {
+      float: left;
+      margin-right: 20px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    width: 1150px;
+  }
+
+  @media (min-width: 1590px) {
+    width: 1540px;
+  }
 }
