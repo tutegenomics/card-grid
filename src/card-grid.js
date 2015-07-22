@@ -29,20 +29,43 @@ angular.module('cardGrid', [])
                     angular.forEach($scope.cards, function(card) {
                         var newCard = angular.element(cardTemplate);
 
-                        // apply directive attribute
-                        newCard.attr(card.directiveName, '');
+                        // we're loading in a directive
+                        if (card.directiveName) {
 
-                        //apply data attribute
-                        newCard.attr('data', card.data);
+                            // apply directive attribute
+                            newCard.attr(card.directiveName, '');
 
-                        // compile element
-                        newCard = $compile(newCard)($scope);
+                            //apply data attribute
+                            newCard.attr('data', 'cardElements');
 
-                        // add to card array
-                        $scope.cardElements.push({
-                            element: newCard,
-                            directive: card.directiveName
-                        });
+                            // compile element
+                            newCard = $compile(newCard)($scope);
+
+                            // push to card array
+                            $scope.cardElements.push({
+                                element: newCard,
+                                directive: card.directiveName
+                            });
+
+                        //  if we're loading in regular content
+                        // todo: should this check for clean html?
+                        } else if (card.content) {
+
+                            // add content into card
+                            newCard[0].innerHTML = card.content
+
+                            // push to card array
+                            $scope.cardElements.push({
+                                element: newCard,
+                                content: card.content
+                            });
+                        } else {
+                            // no content available for this card - throw console error
+                            console.log('error', 'No directive name or Content specified - unable to create card');
+                            return;
+                        }
+
+                        // for each card, find the smallest column, and append card
                         angular.forEach($scope.cards, function(card) {
                             $scope.columnElements[self.getSmallestColumn()].element.append($scope.cardElements[$scope.cardElements.length-1].element);
                         });
@@ -68,7 +91,7 @@ angular.module('cardGrid', [])
                         $scope.columnElements.push({
                             element: $compile(newColumn)($scope)
                         });
-                        $element.append($scope.columnElements[$scope.columnElements.length-1].element);
+                        $element.append($scope.columnElements[i].element);
                     }
                 },
                 getSize: function() {
@@ -99,9 +122,24 @@ angular.module('cardGrid', [])
                 }
 
             };
-            var resizeDebounce = _.debounce(grid.resize.bind(grid), 500);
 
-            grid.init();
+            // debounce grid resize function
+            var resizeDebounce = _.debounce(grid.resize.bind(grid), 300);
+
+            // watch for any changes with the card data - init if it changes
+            $scope.$watch('cards', function(newVal) {
+                if (newVal.length) {
+                    grid.init();
+                }
+            }, true);
+
+            // if cards are available, initialize
+            if ($scope.cards.length) {
+                grid.init();
+            } else {
+                // else show empty message
+                $element.append('<div class="card-grid-empty"></div>');
+            }
 
         };
 
