@@ -31,9 +31,9 @@ angular.module('cardGrid', ['iconPush'])
             var buildLayout = function() {
                 $element.empty();
                 $scope.columnElements = [];
-                var parentWidth = $element[0].parentElement.offsetWidth;
-                var columns = Math.floor(parentWidth / (elementWidth + (gutter*2)));
-                var containerWidth = columns*(elementWidth + (gutter*2));
+                var parentWidth = $element[0].parentElement.offsetWidth - (gutter*4);
+                var columns = Math.floor(parentWidth / elementWidth);
+                var containerWidth = columns*elementWidth + (gutter*(columns-1));
                 $element[0].style.width = containerWidth + 'px';
 
                 for (var i=0;i<columns;i++) {
@@ -46,7 +46,7 @@ angular.module('cardGrid', ['iconPush'])
                     var smallestColumn = getSmallestColumn();
 
                     // set card position
-                    card.element[0].style.left = (gutter) + smallestColumn*elementWidth + (gutter*smallestColumn) +'px';
+                    card.element[0].style.left = smallestColumn*elementWidth + (gutter*smallestColumn) +'px';
                     card.element[0].style.top = $scope.columnElements[smallestColumn].height + 'px';
 
                     // append element
@@ -89,6 +89,10 @@ angular.module('cardGrid', ['iconPush'])
                 }
                 return index;
             };
+
+            var getLargestColumn = function() {
+
+            }
 
             // debounce grid resize function
             var resizeDebounce = _.debounce(init, 300);
