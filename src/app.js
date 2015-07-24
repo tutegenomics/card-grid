@@ -2,14 +2,43 @@ angular.module('app', ['cardGrid'])
 
     .controller('ctrl', function($scope) {
         $scope.cards = [
-
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            },
+            {
+                directiveName: 'test-directive'
+            }
         ]
     })
 
     .directive('testDirective', function() {
         return {
             link: function(scope, element, attrs) {
-                console.log(attrs.data)
+                //console.log(attrs.data)
             },
             template: function(element, attrs) {
                 var number = Math.floor(Math.random() * 51) - 20;
