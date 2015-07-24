@@ -3,35 +3,18 @@ angular.module('app', ['cardGrid'])
     .controller('ctrl', function($scope) {
         $scope.cards = [
             {
-                directiveName: 'test-directive'
+                directive: 'test-directive'
             },
             {
-                directiveName: 'test-directive'
+                directive: 'test-directive'
             },
             {
-                directiveName: 'test-directive'
+                directive: 'test-directive'
             },
             {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
-            },
-            {
-                directiveName: 'test-directive'
+                directive: 'test-directive'
             }
+
         ]
     })
 

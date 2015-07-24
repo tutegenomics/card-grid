@@ -1,28 +1,11 @@
 .card-grid-wrapper {
-  padding: 0 20px;
   margin: 0 auto;
-  clear: both; }
-  .card-grid-wrapper .card-grid-column {
-    width: 370px;
-    margin: 10px auto 0 auto; }
-  .card-grid-wrapper .card {
+  clear: both;
+  height: 40px;
+  background-color: #d3d3d3;
+  position: relative; }
+  .card-grid-wrapper .card-grid-card {
     background-color: #fff;
-    border: solid 1px #d3d3d3;
-    padding: 20px;
-    margin-bottom: 20px; }
-  @media (min-width: 840px) {
-    .card-grid-wrapper {
-      width: 760px; }
-      .card-grid-wrapper .card-grid-column {
-        float: left;
-        margin-right: 20px; }
-        .card-grid-wrapper .card-grid-column:last-child {
-          margin-right: 0; } }
-  @media (min-width: 1200px) {
-    .card-grid-wrapper {
-      width: 1150px; } }
-  @media (min-width: 1590px) {
-    .card-grid-wrapper {
-      width: 1540px; } }
+    position: absolute; }
 
 /*# sourceMappingURL=main.css.map */
