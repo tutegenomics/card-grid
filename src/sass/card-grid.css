@@ -5,6 +5,7 @@
   .card-grid-wrapper .card-grid-card {
     position: absolute;
     top: 0;
-    left: 900px; }
+    left: 900px;
+    cursor: pointer; }
 
 /*# sourceMappingURL=card-grid.css.map */

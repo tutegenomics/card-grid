@@ -97,6 +97,18 @@ angular.module('cardGrid', ['iconPush'])
                 })
             };
 
+            $scope.openCard = function(element) {
+                Velocity(element, {
+                    top: 0,
+                    left: gutter,
+                    width: $scope.containerWidth - gutter*2
+                }, {
+                    begin: function(element) {
+                        element[0].style.zIndex = 10;
+                    }
+                })
+            };
+
             var getSmallestColumn = function() {
                 var index = 0;
                 var value = $scope.columnElements[0].height;
@@ -129,8 +141,8 @@ angular.module('cardGrid', ['iconPush'])
                 function () {
                     return $element[0].parentElement.offsetWidth;
                 },
-                function (newValue, oldValue) {
-                    if (newValue != oldValue) {
+                function (newVal, oldVal) {
+                    if (newVal != oldVal) {
                         $scope.buildLayout();
                     }
                 });
@@ -159,11 +171,15 @@ angular.module('cardGrid', ['iconPush'])
                 function () {
                     return $element[0].offsetHeight;
                 },
-                function (newValue, oldValue) {
-                    if (newValue != oldValue) {
+                function (newVal, oldVal) {
+                    if (newVal != oldVal) {
                         $scope.buildLayout();
                     }
                 });
+
+            $element.on('click', function() {
+                $scope.openCard($element);
+            });
         };
 
         return {
