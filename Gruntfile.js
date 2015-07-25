@@ -30,8 +30,15 @@ module.exports = function(grunt){
                     open: true
                 }
             }
+        },
+        copy: {
+            main: {
+                files: [
+                    {expand: true, flatten: true, src: ['src/card-grid.js'], dest: 'dist/'},
+                    {expand: true, flatten: true, src: ['src/sass/card-grid.css'], dest: 'dist/'}
+                ]
+            }
         }
-
     });
 
     grunt.registerTask('serve', function (target) {
@@ -42,5 +49,5 @@ module.exports = function(grunt){
         ]);
     });
 
-    grunt.registerTask('default', []);
+    grunt.registerTask('build', ['copy']);
 };

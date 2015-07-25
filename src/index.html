@@ -9,20 +9,22 @@
             background-color: #e3e3e3;
         }
     </style>
-    <link rel="stylesheet" href="sass/main.css"/>
+    <link rel="stylesheet" href="sass/card-grid.css"/>
     <link rel="stylesheet" href="lib/tute-icons/dist/icon-push.css">
 </head>
 <body ng-app="app" ng-controller="ctrl">
 
 <icon-push></icon-push>
 
-<card-grid cards="cards" gutter="hey"></card-grid>
 
-<button card-grid-update>update me</button>
+<div style="background-color: red; width: 1200px;">
+    <card-grid cards="cards" gutter="hey"></card-grid>
+</div>
 
 <script src="lib/angular/angular.js"></script>
 <script src="app.js"></script>
 <script src="lib/lodash/lodash.min.js"></script>
+<script src="lib/velocity/velocity.min.js"></script>
 <script src="card-grid.js"></script>
 <script src="lib/tute-icons/dist/icon-push.js"></script>
 </body>

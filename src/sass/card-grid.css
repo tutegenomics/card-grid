@@ -1,0 +1,10 @@
+.card-grid-wrapper {
+  margin: 0 auto;
+  clear: both;
+  position: relative; }
+  .card-grid-wrapper .card-grid-card {
+    position: absolute;
+    top: 0;
+    left: 900px; }
+
+/*# sourceMappingURL=card-grid.css.map */
