@@ -1,16 +1,11 @@
-.card-grid-container {
-
-}
-
 .card-grid-wrapper {
   margin: 0 auto;
   clear: both;
-  height: 40px;
-  background-color: #d3d3d3;
   position: relative;
 
   .card-grid-card {
-    background-color: #fff;
     position: absolute;
+    top: 0;
+    left: 50%;
   }
 }

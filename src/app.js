@@ -29,7 +29,7 @@ angular.module('app', ['cardGrid'])
                 for (var i=0; i<number; i++) {
                     string += '<br>';
                 }
-                return 'hey hey hey' + string;
+                return '<div style="background-color: #fff;padding: 20px;border: solid 1px #d3d3d3;">hey hey hey '+string+'</div>';
             }
         }
     });

@@ -16,6 +16,7 @@
   "dependencies": {
     "angular": "1.4.x",
     "lodash": "~3.10.0",
-    "tute-icons": "tutegenomics/icons"
+    "tute-icons": "tutegenomics/icons",
+    "velocity": "~1.2.2"
   }
 }

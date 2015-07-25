@@ -20,50 +20,61 @@ angular.module('cardGrid', ['iconPush'])
             });
 
             var init = function() {
-                buildCards();
-                buildLayout();
-
-                angular.forEach($scope.cards, function(card) {
-                    //var smallestColumn = getSmallestColumn();
-                })
+                $scope.buildCards();
+                $scope.buildLayout();
             };
 
-            var buildLayout = function() {
-                $element.empty();
-                $scope.columnElements = [];
+            $scope.buildLayout = function() {
                 var parentWidth = $element[0].parentElement.offsetWidth;
                 var columns = Math.floor(parentWidth / (elementWidth + (gutter*2)));
-                var containerWidth = columns*(elementWidth + (gutter*2));
-                $element[0].style.width = containerWidth + 'px';
 
-                for (var i=0;i<columns;i++) {
-                    $scope.columnElements.push({
-                        height: 0,
-                        cards: []
+                // minimum of 1 column
+                columns = columns?columns:1;
+
+                // new width with added gutters
+                var containerWidth = (columns*elementWidth) + gutter*columns + gutter;
+
+                // only continue if the container width has changed
+                if ($scope.containerWidth != containerWidth) {
+                    $element.empty();
+                    $scope.columnElements = [];
+                    $scope.containerWidth = containerWidth;
+                    $element[0].style.width = containerWidth + 'px';
+
+                    // create new column object
+                    for (var i=0;i<columns;i++) {
+                        $scope.columnElements.push({
+                            height: 0,
+                            cards: []
+                        });
+                    }
+
+                    // manipulate cards
+                    angular.forEach($scope.cardElements, function(card) {
+                        var smallestColumn = getSmallestColumn();
+
+                        // set card position
+                        card.element[0].style.left = (gutter) + smallestColumn*elementWidth + (gutter*smallestColumn) +'px';
+                        card.element[0].style.top = $scope.columnElements[smallestColumn].height + 'px';
+
+                        // append element
+                        $element.append(card.element);
+
+                        // set card height
+                        card.height = card.element[0].offsetHeight;
+                        $scope.columnElements[smallestColumn].height = card.height + gutter + $scope.columnElements[smallestColumn].height;
+
+                        // push card to column object
+                        $scope.columnElements[smallestColumn].cards.push(card.element);
                     });
+
+                    // set height of container
+                    $element[0].style.height = $scope.columnElements[getLargestColumn()].height + 'px';
+
                 }
-                angular.forEach($scope.cardElements, function(card) {
-                    var smallestColumn = getSmallestColumn();
-
-                    // set card position
-                    card.element[0].style.left = (gutter) + smallestColumn*elementWidth + (gutter*smallestColumn) +'px';
-                    card.element[0].style.top = $scope.columnElements[smallestColumn].height + 'px';
-
-                    // append element
-                    $element.append(card.element);
-
-                    // set card height
-                    card.height = card.element[0].offsetHeight;
-
-                    $scope.columnElements[smallestColumn].cards.push(card.element);
-                    $scope.columnElements[smallestColumn].height = card.height + gutter + $scope.columnElements[smallestColumn].height;
-                });
-
-                console.log($scope.columnElements);
-
             };
 
-            var buildCards = function() {
+            $scope.buildCards = function() {
                 angular.forEach($scope.cards, function(card, i) {
                     var cardElement = angular.element(cardTemplate);
 
@@ -90,8 +101,20 @@ angular.module('cardGrid', ['iconPush'])
                 return index;
             };
 
+            var getLargestColumn = function() {
+                var index = 0;
+                var value = $scope.columnElements[0].height;
+                for (var i = 1; i < $scope.columnElements.length; i++) {
+                    if ($scope.columnElements[i].height > value) {
+                        value = $scope.columnElements[i].height;
+                        index = i;
+                    }
+                }
+                return index;
+            };
+
             // debounce grid resize function
-            var resizeDebounce = _.debounce(init, 300);
+            var resizeDebounce = _.debounce($scope.buildLayout, 300);
 
 
             init();
@@ -106,17 +129,20 @@ angular.module('cardGrid', ['iconPush'])
                 gutter: '@'
             },
             controller: cardGridCtrl,
+            link: function(scope, element) {},
             template: '<div class="card-grid-wrapper"></div>'
         }
     })
 
-    .directive('cardGridElement', function() {
-        var cardGridElementCtrl = function($scope, $element) {
-        };
-
-        return {
-            require: '^cardGrid',
-            restrict: 'A',
-            controller: cardGridElementCtrl
-        }
-    });
+    //.directive('cardGridUpdate', function() {
+    //    var cardGridElementCtrl = function(scope, element) {
+    //    };
+    //
+    //    return {
+    //        require: '^cardGrid',
+    //        restrict: 'A',
+    //        link: function(scope, element, attrs, cardGridCtrl) {
+    //
+    //        }
+    //    }
+    //})
