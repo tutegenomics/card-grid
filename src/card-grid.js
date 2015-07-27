@@ -177,9 +177,9 @@ angular.module('cardGrid', ['iconPush'])
                     }
                 });
 
-            $element.on('click', function() {
-                $scope.openCard($element);
-            });
+            //$element.on('click', function() {
+            //    $scope.openCard($element);
+            //});
         };
 
         return {
