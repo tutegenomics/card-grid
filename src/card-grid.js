@@ -1,6 +1,6 @@
 angular.module('cardGrid', [])
 
-    .directive('cardGrid', function($window, $compile) {
+    .directive('cardGrid', ['$window', '$compile', function($window, $compile) {
 
         var cardGridCtrl = function($scope, $element) {
 
@@ -144,6 +144,8 @@ angular.module('cardGrid', [])
             init();
         };
 
+        cardGridCtrl.$inject = ["$scope", "$element"];
+
         return {
             restrict: 'E',
             replace: true,
@@ -155,9 +157,9 @@ angular.module('cardGrid', [])
             link: function(scope, element) {},
             template: '<div class="card-grid-wrapper"></div>'
         }
-    })
+    }])
 
-    .directive('cardGridElement', function() {
+    .directive('cardGridElement', [function() {
         var cardGridElementCtrl = function($scope, $element) {
 
             // rebuild layout if a card height's changes
@@ -173,9 +175,11 @@ angular.module('cardGrid', [])
 
         };
 
+        cardGridElementCtrl.$inject = ["$scope", "$element"];
+
         return {
             require: '^cardGrid',
             restrict: 'A',
             controller: cardGridElementCtrl
         }
-    });
+    }]);
