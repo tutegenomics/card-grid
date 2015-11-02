@@ -45,9 +45,9 @@ angular.module('cardGrid', [])
                         });
                     }
 
-                    // manipulate cards
                     angular.forEach($scope.cardElements, function(card) {
                         var smallestColumn = getSmallestColumn();
+                        card.element.removeClass('card-grid-card-full');
 
                         // set card position
                         Velocity(card.element, {
@@ -71,6 +71,7 @@ angular.module('cardGrid', [])
 
                     // set height of container
                     $element[0].style.height = $scope.columnElements[getLargestColumn()].height + 'px';
+
 
                 }
             };

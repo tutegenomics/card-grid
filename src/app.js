@@ -20,7 +20,7 @@ angular.module('app', ['cardGrid'])
 
     .directive('testDirective', function() {
         return {
-            link: function(scope, element, attrs) {
+            controller: function($scope, $element) {
                 //console.log(attrs.data)
             },
             template: function(element, attrs) {
