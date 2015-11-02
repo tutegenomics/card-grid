@@ -1,4 +1,4 @@
-angular.module('cardGrid')
+angular.module('cardGrid', [])
 
     .directive('cardGrid', function($window, $compile) {
 
