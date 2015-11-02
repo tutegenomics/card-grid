@@ -3,16 +3,29 @@ angular.module('app', ['cardGrid'])
     .controller('ctrl', function($scope) {
         $scope.cards = [
             {
-                directive: 'test-directive'
+                element: 'test-element-name'
             },
             {
-                directive: 'test-directive'
+                attrs: [
+                    'test-element-name',
+                    'test-this-out'
+                ]
             },
             {
-                directive: 'test-directive'
+                attrs: 'test-directive'
             },
             {
-                directive: 'test-directive'
+                attrs: {
+                    'test-element-name': 'value',
+                    'test-this-out': ''
+                }
+            },
+            {
+                attrs: [
+                    {
+                        'test-directive': 'value'
+                    }
+                ]
             }
 
         ]
@@ -21,10 +34,21 @@ angular.module('app', ['cardGrid'])
     .directive('testDirective', function() {
         return {
             controller: function($scope, $element) {
-                //console.log(attrs.data)
             },
             template: function(element, attrs) {
                 return '<div style="background-color: #fff;padding: 20px;border: solid 1px #d3d3d3;">hey hey hey</div>';
+            }
+        }
+    })
+    .directive('testElementName', function() {
+        return {
+            controller: function($scope, $element) {
+            },
+            scope: {
+                value: '=testElementName'
+            },
+            template: function(element, attrs) {
+                return '<div style="background-color: #fff;padding: 20px;border: solid 1px #d3d3d3;">test element name</div>';
             }
         }
     });

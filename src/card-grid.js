@@ -76,15 +76,39 @@ angular.module('cardGrid', [])
                 }
             };
 
+            function buildCard(content) {
+                var el = content.element && _.isString(content.element)?content.element:'div';
+                var cardElement = angular.element('<'+el+' class="card-grid-card" card-grid-element></'+el+'>');
+                if (_.isString(content.attrs)) {
+                    cardElement.attr(content.attrs, '');
+                } else {
+                    _.forEach(content.attrs, function(attr, key) {
+                        if (!_.isNumber(key)) {
+                            cardElement.attr(key, attr);
+                        } else {
+                            if (_.isObject(attr)) {
+                                cardElement.attr(Object.keys(attr)[0], attr[Object.keys(attr)[0]])
+                            } else {
+                                cardElement.attr(attr, '');
+                            }
+                        }
+                    });
+                }
+
+                return cardElement;
+            }
+
             $scope.buildCards = function() {
                 angular.forEach($scope.cards, function(card, i) {
-                    var cardElement = angular.element(cardTemplate);
+
+                    var cardElement = buildCard(card);
+
+                    //var cardElement = angular.element(cardTemplate);
 
                     // set card width
                     cardElement[0].style.width = elementWidth + 'px';
                     cardElement[0].style.opacity = 0;
 
-                    cardElement.attr(card.directive, '');
                     $scope.cardElements.push({
                         element: $compile(cardElement[0])($scope),
                         height: elementWidth

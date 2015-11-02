@@ -5,7 +5,8 @@
   .card-grid-wrapper .card-grid-card {
     position: absolute;
     top: 0;
-    left: 900px; }
+    left: 900px;
+    display: block; }
   @media (max-width: 768px) {
     .card-grid-wrapper {
       width: 100% !important; }
