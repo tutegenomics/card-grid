@@ -1,10 +1,6 @@
-angular.module('cardGrid', ['iconPush'])
+angular.module('cardGrid')
 
-    .service('cardGridProvider', function() {
-
-    })
-
-    .directive('cardGrid', function($window, $compile, $timeout) {
+    .directive('cardGrid', function($window, $compile) {
 
         var cardGridCtrl = function($scope, $element) {
 
@@ -60,9 +56,7 @@ angular.module('cardGrid', ['iconPush'])
                             opacity: 1
                         }, {
                             easing: 'ease'
-                        })
-                        //card.element[0].style.left = (gutter) + smallestColumn*elementWidth + (gutter*smallestColumn) +'px';
-                        //card.element[0].style.top = $scope.columnElements[smallestColumn].height + 'px';
+                        });
 
                         // append element
                         $element.append(card.element);
@@ -177,9 +171,6 @@ angular.module('cardGrid', ['iconPush'])
                     }
                 });
 
-            //$element.on('click', function() {
-            //    $scope.openCard($element);
-            //});
         };
 
         return {

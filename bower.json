@@ -5,6 +5,7 @@
   "authors": [
     "Tony <tonylefler@gmail.com>"
   ],
+  "main": ["dist/card-grid.js", "dist/card-grid.css"],
   "license": "MIT",
   "ignore": [
     "**/.*",
