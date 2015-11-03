@@ -7,7 +7,7 @@ angular.module('cardGrid', [])
             $scope.columnElements = [];
             $scope.cardElements = [];
             var gutter  = parseInt($scope.gutter)?parseInt($scope.gutter):20,
-                elementWidth = 367,
+                elementWidth = _.isNumber($scope.cardWidth)?$scope.cardWidth:367,
                 cardTemplate = '<div class="card-grid-card" card-grid-element></div>',
                 w = angular.element($window);
 
@@ -180,7 +180,8 @@ angular.module('cardGrid', [])
             replace: true,
             scope: {
                 cards: '=',
-                gutter: '@'
+                gutter: '@',
+                cardWidth: '='
             },
             controller: cardGridCtrl,
             link: function(scope, element) {},
