@@ -20,7 +20,11 @@ angular.module('cardGrid', [])
                 $scope.buildLayout();
             };
 
-            $scope.buildLayout = function() {
+            $scope.$on('$updateCardGridLayout', function() {
+                resizeDebounce(true);
+            });
+
+            $scope.buildLayout = function(hasChanged) {
                 var parentWidth = $element[0].parentElement.offsetWidth;
                 var columns = Math.floor(parentWidth / (elementWidth + (gutter*2)));
 
@@ -31,7 +35,7 @@ angular.module('cardGrid', [])
                 var containerWidth = (columns*elementWidth) + gutter*columns + gutter;
 
                 // only continue if the container width has changed
-                if ($scope.containerWidth != containerWidth) {
+                if ($scope.containerWidth != containerWidth || hasChanged) {
                     $element.empty();
                     $scope.columnElements = [];
                     $scope.containerWidth = containerWidth;
@@ -153,7 +157,7 @@ angular.module('cardGrid', [])
             };
 
             // debounce grid resize function
-            var resizeDebounce = _.debounce($scope.buildLayout, 300);
+            var resizeDebounce = _.debounce($scope.buildLayout, 100);
 
             // rebuild if the directive's parent elements width changes
             $scope.$watch(
