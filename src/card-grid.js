@@ -7,7 +7,7 @@ angular.module('cardGrid', [])
             $scope.columnElements = [];
             $scope.cardElements = [];
             var gutter  = parseInt($scope.gutter)?parseInt($scope.gutter):20,
-                elementWidth = 350,
+                elementWidth = 368,
                 cardTemplate = '<div class="card-grid-card" card-grid-element></div>',
                 w = angular.element($window);
 
