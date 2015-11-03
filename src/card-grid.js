@@ -26,13 +26,13 @@ angular.module('cardGrid', [])
 
             $scope.buildLayout = function(hasChanged) {
                 var parentWidth = $element[0].parentElement.offsetWidth;
-                var columns = Math.floor(parentWidth / (elementWidth + (gutter*2)));
+                var columns = Math.floor((parentWidth / (elementWidth + gutter)));
 
                 // minimum of 1 column
                 columns = columns?columns:1;
 
                 // new width with added gutters
-                var containerWidth = (columns*elementWidth) + gutter*columns + gutter;
+                var containerWidth = (columns*elementWidth) + gutter*(columns-1);
 
                 // only continue if the container width has changed
                 if ($scope.containerWidth != containerWidth || hasChanged) {
@@ -55,7 +55,7 @@ angular.module('cardGrid', [])
 
                         // set card position
                         Velocity(card.element, {
-                            left: (gutter) + smallestColumn*elementWidth + (gutter*smallestColumn),
+                            left: smallestColumn*elementWidth + (gutter*smallestColumn),
                             top: $scope.columnElements[smallestColumn].height,
                             opacity: 1
                         }, {
