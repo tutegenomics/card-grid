@@ -74,7 +74,9 @@ angular.module('cardGrid', [])
                     });
 
                     // set height of container
-                    $element[0].style.height = $scope.columnElements[getLargestColumn()].height + 'px';
+                    Velocity($element, {
+                        height: $scope.columnElements[getLargestColumn()].height + 'px'
+                    });
 
 
                 }
