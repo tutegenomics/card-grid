@@ -8,7 +8,6 @@ angular.module('cardGrid', [])
             $scope.cardElements = [];
             var gutter  = parseInt($scope.gutter)?parseInt($scope.gutter):20,
                 elementWidth = _.isNumber($scope.cardWidth)?$scope.cardWidth:367,
-                cardTemplate = '<div class="card-grid-card" card-grid-element></div>',
                 w = angular.element($window);
 
             w.bind('resize', function() {
@@ -84,7 +83,7 @@ angular.module('cardGrid', [])
 
             function buildCard(content) {
                 var el = content.element && _.isString(content.element)?content.element:'div';
-                var cardElement = angular.element('<'+el+' class="card-grid-card" card-grid-element></'+el+'>');
+                var cardElement = angular.element('<'+el+' class="card-grid-card"></'+el+'>');
                 if (_.isString(content.attrs)) {
                     cardElement.attr(content.attrs, '');
                 } else {
@@ -100,7 +99,6 @@ angular.module('cardGrid', [])
                         }
                     });
                 }
-
                 return cardElement;
             }
 
@@ -116,7 +114,7 @@ angular.module('cardGrid', [])
                     cardElement[0].style.opacity = 0;
 
                     $scope.cardElements.push({
-                        element: $compile(cardElement[0])($scope),
+                        element: $compile(cardElement)($scope),
                         height: elementWidth
                     });
                 })
@@ -186,32 +184,6 @@ angular.module('cardGrid', [])
                 cardWidth: '='
             },
             controller: cardGridCtrl,
-            link: function(scope, element) {},
             template: '<div class="card-grid-wrapper"></div>'
-        }
-    }])
-
-    .directive('cardGridElement', [function() {
-        var cardGridElementCtrl = function($scope, $element) {
-
-            // rebuild layout if a card height's changes
-            $scope.$watch(
-                function () {
-                    return $element[0].offsetHeight;
-                },
-                function (newVal, oldVal) {
-                    if (newVal != oldVal) {
-                        $scope.buildLayout();
-                    }
-                });
-
-        };
-
-        cardGridElementCtrl.$inject = ["$scope", "$element"];
-
-        return {
-            require: '^cardGrid',
-            restrict: 'A',
-            controller: cardGridElementCtrl
         }
     }]);
